@@ -1,0 +1,15 @@
+# Compiled binaries / build output
+clock
+*.o
+*.out
+*.exe
+a.out
+
+# Visual Studio build folders (if you later add a VS project)
+Debug/
+Release/
+x64/
+.vs/
+
+# macOS
+.DS_Store
