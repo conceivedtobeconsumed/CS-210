@@ -1,0 +1,77 @@
+Airgead Banking Investment Application - Pseudocode
+Author: [Your Name]
+Date: [Enter date]
+
+======================================================================
+PROGRAM OVERVIEW
+======================================================================
+The program collects investment details from the user, then prints two
+year-by-year reports showing how the investment grows:
+  Report 1: growth with NO additional monthly deposits
+  Report 2: growth WITH the user's monthly deposit
+Interest is compounded monthly. Each report row shows the year-end
+balance and the total interest earned during that year.
+
+======================================================================
+CLASS: Investment  (prototype in Investment.h, body in Investment.cpp)
+======================================================================
+Private member data (m_ prefix):
+  m_initialInvestment   the starting amount
+  m_monthlyDeposit      amount added each month
+  m_annualInterestRate  yearly interest rate as a percent
+  m_numberOfYears       how many years to grow
+
+Public functions:
+  Constructor with defaults for all four values
+  Setter for each value (validate: initial, deposit, rate, years not negative;
+      years greater than zero)
+  Getter for each value
+  PrintReport that takes a flag telling it whether to include the
+      monthly deposit, then prints that report's table
+
+======================================================================
+INPUT STEP (handled by an input routine in main)
+======================================================================
+Display a header titled "Data Input"
+Prompt for Initial Investment Amount and read it
+Prompt for Monthly Deposit and read it
+Prompt for Annual Interest and read it
+Prompt for Number of Years and read it
+Wrap each read in try/catch so bad input is caught and re-prompted
+Store the four values into an Investment object through its setters
+
+======================================================================
+CALCULATION LOGIC (inside PrintReport)
+======================================================================
+Set openingAmount to the initial investment
+Set monthlyDeposit to the user's deposit, or zero if this is the no-deposit report
+Set monthlyRate to (annualInterestRate / 100) / 12
+
+For each year from 1 to numberOfYears
+    Set yearlyInterest to zero
+    For each month from 1 to 12
+        Set monthInterest to (openingAmount + monthlyDeposit) * monthlyRate
+        Add monthInterest to yearlyInterest
+        Set openingAmount to openingAmount + monthlyDeposit + monthInterest
+    End month loop
+    Print the year number, the year-end balance (openingAmount),
+        and the yearly interest, formatted as currency
+End year loop
+
+======================================================================
+OUTPUT STEP
+======================================================================
+Print the header "Balance and Interest Without Additional Monthly Deposits"
+Call PrintReport with the no-deposit flag
+Print the header "Balance and Interest With Additional Monthly Deposits"
+Call PrintReport with the include-deposit flag
+
+======================================================================
+MAIN (driver only - minimal code)
+======================================================================
+Create an Investment object
+Call the input routine to fill the object
+Pause with "Press any key to continue"
+Print both reports by calling PrintReport twice
+Allow the user to run again with new values (loop) or quit
+End program
